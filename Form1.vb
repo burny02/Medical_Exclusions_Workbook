@@ -5,6 +5,7 @@ Public Class Form1
     Private LatestThread As Integer = 0
     Private CondID As Long = 0
     Private AllowNavigate As Boolean = False
+    Private QnAToggle As Boolean = False
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -108,14 +109,82 @@ Public Class Form1
         TextBox2.ReadOnly = True
         TextBox3.ReadOnly = True
 
-        Dim SQLString As String = "SELECT MaleOrFemale, WhatIsIt FROM ConditionTbl WHERE ConditionID=" & CondID
+        Dim SQLString As String = "SELECT Male, Female, WhatIsIt FROM ConditionTbl WHERE ConditionID=" & CondID
+        Dim SQLString2 As String = "SELECT Question, Answer, GivenBy, Reviewed FROM QnA WHERE ConditionID=" & CondID
+        Dim SQLString3 As String = "SELECT Type FROM DiseaseTypeTbl a INNER JOIN CondDiseaseTbl b " &
+                                   "ON a.TypeID=b.TypeID WHERE b.ConditionID=" & CondID
         Dim InfoTbl As DataTable = OverClass.TempDataTable(SQLString)
+        Dim QnATbl As DataTable = OverClass.TempDataTable(SQLString2)
+        Dim TagString As String = OverClass.CreateCSVString(SQLString3)
 
         TextBox3.Text = InfoTbl.Rows(0).Item("WhatIsit").ToString
-        WebBrowser1.Visible = False
-        AllowNavigate = True
-        WebBrowser1.Navigate("http://www.google.com/images?&q=" & TextBox2.Text)
+        TextBox4.Text = TagString
 
+
+        If InfoTbl.Rows(0).Item("Male") = True Then
+            PictureBox5.BackgroundImage = My.Resources.Male
+        Else
+            PictureBox5.BackgroundImage = My.Resources.MaleNO
+        End If
+
+        If InfoTbl.Rows(0).Item("Female") = True Then
+            PictureBox3.BackgroundImage = My.Resources.female
+        Else
+            PictureBox3.BackgroundImage = My.Resources.femaleNO
+        End If
+
+
+        TreeView1.Nodes.Clear()
+        Dim myImageList As New ImageList()
+        myImageList.Images.Add(My.Resources.help)
+        myImageList.Images.Add(My.Resources.lightbulb)
+        TreeView1.ImageList = myImageList
+
+        For Each row As DataRow In QnATbl.Rows
+
+            Dim ChildNode(0) As TreeNode
+            ChildNode(0) = New TreeNode(row.Item("Answer") & " - " & row.Item("GivenBy") & "(" & row.Item("Reviewed") & ")")
+            ChildNode(0).ImageIndex = 1
+            ChildNode(0).SelectedImageIndex = 1
+            Dim RootNode As TreeNode = Nothing
+            Dim RootString As String = row.Item("Question") & "..."
+            Dim CutPlace As Long = 50
+
+            Do While RootString <> ""
+
+                Dim SpaceLocation As Long = 0
+                SpaceLocation = InStr(CutPlace, RootString, " ", CompareMethod.Binary)
+                If SpaceLocation <> 0 Then CutPlace = SpaceLocation
+
+                Dim LeftString As String = Strings.Left(RootString, CutPlace)
+
+                If Len(RootString) > CutPlace Then
+                    RootNode = New TreeNode(Trim(LeftString))
+                Else
+                    RootNode = New TreeNode(Trim(LeftString), ChildNode)
+                End If
+
+                If RootString = row.Item("Question") & "..." Then
+                    RootNode.ImageIndex = 0
+                    RootNode.SelectedImageIndex = 0
+                Else
+                    RootNode.ImageIndex = 3
+                    RootNode.SelectedImageIndex = 3
+                End If
+                RootString = Replace(RootString, LeftString, "")
+                TreeView1.Nodes.Add(RootNode)
+
+            Loop
+
+            Dim SpaceNode As New TreeNode("")
+            SpaceNode.ImageIndex = 3
+            SpaceNode.SelectedImageIndex = 3
+            TreeView1.Nodes.Add(SpaceNode)
+
+        Next
+
+        QnAToggle = True
+        ToggleByLabel(Panel1, QnAToggle, "Questions and Answers", 260, 30)
 
 
         If OverClass.ReadOnlyUser = False Then
@@ -127,14 +196,50 @@ Public Class Form1
 
     End Sub
 
-    Private Sub WebBrowser1_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles WebBrowser1.DocumentCompleted
-        WebBrowser1.ScrollBarsEnabled = True
-        WebBrowser1.Document.Window.ScrollTo(0, 300)
-        WebBrowser1.Visible = True
-        AllowNavigate = False
+    Private Sub Label1_DoubleClick(sender As Object, e As EventArgs) Handles Label1.DoubleClick
+        ToggleByLabel(Panel1, QnAToggle, "Questions and Answers", 260, 30)
     End Sub
 
-    Private Sub WebBrowser1_Navigating(sender As Object, e As WebBrowserNavigatingEventArgs) Handles WebBrowser1.Navigating
-        If AllowNavigate = False Then e.Cancel = True
+
+    Private Sub ToggleByLabel(WhichPanel As Panel,
+                              ByRef ToggleBoolean As Boolean,
+                              PanelLabel As String,
+                              ExpandHeight As Long,
+                              RetractHeight As Long)
+
+
+        If ToggleBoolean = False Then
+
+            Dim HeightChange As Long = WhichPanel.Height
+            Label1.Text = "- " & PanelLabel & "..."
+            WhichPanel.Height = ExpandHeight
+            HeightChange = WhichPanel.Height - HeightChange
+            For Each ctl As Control In TabPage2.Controls
+                If ctl.Top <= WhichPanel.Top + WhichPanel.Height And
+                ctl.Bottom > WhichPanel.Top And
+                ctl.Name <> WhichPanel.Name Then
+                    ctl.Top = ctl.Top + HeightChange
+                End If
+            Next
+
+        ElseIf ToggleBoolean = True Then
+
+            Dim HeightChange As Long = WhichPanel.Height
+            Label1.Text = "+ " & PanelLabel & "..."
+            WhichPanel.Height = RetractHeight
+            HeightChange = WhichPanel.Height - HeightChange
+            For Each ctl As Control In TabPage2.Controls
+                If ctl.Top >= WhichPanel.Top + WhichPanel.Height And
+                ctl.Bottom > WhichPanel.Top And
+                ctl.Name <> WhichPanel.Name Then
+                    ctl.Top = ctl.Top + HeightChange
+                End If
+            Next
+
+        End If
+
+        ToggleBoolean = Not ToggleBoolean
+
     End Sub
+
 End Class

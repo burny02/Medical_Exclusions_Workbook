@@ -5,6 +5,7 @@ Module Variables
     Private Const TablePath As String = "M:\VOLUNTEER SCREENING SERVICES\Systems\Medical_Exclusions_Workbook\Backend.accdb"
     Private Const PWord As String = "RetroRetro*1"
     Private Const Connect2 As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & TablePath & ";Jet OLEDB:Database Password=" & PWord
+    Private Const AuditTable As String = "[Audit]"
     Private Const UserTable As String = "[Users]"
     Private Const UserField As String = "Username"
     Private Const LockTable As String = "[Locker]"
@@ -30,7 +31,8 @@ Module Variables
                            UserField,
                            LockTable,
                            Contact,
-                           Connect2)
+                           Connect2,
+                           AuditTable)
 
         OverClass.LockCheck()
 
@@ -58,7 +60,8 @@ Module Variables
                            UserField,
                            LockTable,
                            Contact,
-                           Connect2)
+                           Connect2,
+                           AuditTable)
         NewOverclass = Whichclass
 
     End Function
