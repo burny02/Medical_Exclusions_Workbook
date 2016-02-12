@@ -22,12 +22,7 @@ Medical_Exclusions_Workbook
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
-<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.female">
-<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.femaleNO">
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.codes">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
@@ -48,16 +43,6 @@ Medical_Exclusions_Workbook
 </summary>
 </member>
 <member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.Magni">
-<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.Male">
-<summary>
-  Looks up a localized resource of type System.Drawing.Bitmap.
-</summary>
-</member>
-<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.MaleNO">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>

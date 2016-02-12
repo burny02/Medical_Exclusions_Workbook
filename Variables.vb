@@ -2,6 +2,7 @@
 
 Module Variables
     Public OverClass As OverClass
+    Public Const ImagePath As String = "M:\VOLUNTEER SCREENING SERVICES\Systems\Medical_Exclusions_Workbook\Images\"
     Private Const TablePath As String = "M:\VOLUNTEER SCREENING SERVICES\Systems\Medical_Exclusions_Workbook\Backend.accdb"
     Private Const PWord As String = "RetroRetro*1"
     Private Const Connect2 As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & TablePath & ";Jet OLEDB:Database Password=" & PWord
@@ -9,7 +10,6 @@ Module Variables
     Private Const UserTable As String = "[Users]"
     Private Const UserField As String = "Username"
     Private Const LockTable As String = "[Locker]"
-    Private Const ActiveUsersTable As String = "[Users]"
     Private Contact As String = "Elisha Applebaum"
     Public Const SolutionName As String = "Medical Exclusions Workbook"
     Public LabForm As Form1

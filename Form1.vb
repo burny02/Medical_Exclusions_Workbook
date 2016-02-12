@@ -6,6 +6,7 @@ Public Class Form1
     Private CondID As Long = 0
     Private AllowNavigate As Boolean = False
     Private QnAToggle As Boolean = False
+    Private CodesToggle As Boolean = False
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -81,7 +82,6 @@ Public Class Form1
 
     Private Sub ListBox1_DoubleClick(sender As Object, e As EventArgs) Handles ListBox1.DoubleClick
 
-        TextBox2.Text = ListBox1.Text.ToString
         CondID = ListBox1.SelectedValue.ToString
         Me.TabControl1.SelectedIndex = 1
         Me.TabControl1_Selecting(Me.TabControl1, New TabControlCancelEventArgs(TabPage2, 0, False, TabControlAction.Selecting))
@@ -109,30 +109,23 @@ Public Class Form1
         TextBox2.ReadOnly = True
         TextBox3.ReadOnly = True
 
-        Dim SQLString As String = "SELECT Male, Female, WhatIsIt FROM ConditionTbl WHERE ConditionID=" & CondID
+        Dim SQLString As String = "SELECT ImageFileName, WhatIsIt, CondName FROM ConditionTbl WHERE ConditionID=" & CondID
         Dim SQLString2 As String = "SELECT Question, Answer, GivenBy, Reviewed FROM QnA WHERE ConditionID=" & CondID
-        Dim SQLString3 As String = "SELECT Type FROM DiseaseTypeTbl a INNER JOIN CondDiseaseTbl b " &
-                                   "ON a.TypeID=b.TypeID WHERE b.ConditionID=" & CondID
         Dim InfoTbl As DataTable = OverClass.TempDataTable(SQLString)
         Dim QnATbl As DataTable = OverClass.TempDataTable(SQLString2)
-        Dim TagString As String = OverClass.CreateCSVString(SQLString3)
+
+        TextBox2.Text = InfoTbl.Rows(0).Item("CondName")
+        Dim ImageFileName As String = ImagePath & InfoTbl.Rows(0).Item("ImageFileName")
+
+        If My.Computer.FileSystem.FileExists(ImageFileName) Then
+            PictureBox6.BackgroundImage = Image.FromFile(ImageFileName)
+        Else
+            PictureBox6.BackgroundImage = Nothing
+        End If
+        PictureBox6.BackgroundImageLayout = ImageLayout.Zoom
+
 
         TextBox3.Text = InfoTbl.Rows(0).Item("WhatIsit").ToString
-        TextBox4.Text = TagString
-
-
-        If InfoTbl.Rows(0).Item("Male") = True Then
-            PictureBox5.BackgroundImage = My.Resources.Male
-        Else
-            PictureBox5.BackgroundImage = My.Resources.MaleNO
-        End If
-
-        If InfoTbl.Rows(0).Item("Female") = True Then
-            PictureBox3.BackgroundImage = My.Resources.female
-        Else
-            PictureBox3.BackgroundImage = My.Resources.femaleNO
-        End If
-
 
         TreeView1.Nodes.Clear()
         Dim myImageList As New ImageList()
@@ -140,25 +133,63 @@ Public Class Form1
         myImageList.Images.Add(My.Resources.lightbulb)
         TreeView1.ImageList = myImageList
 
+
+
         For Each row As DataRow In QnATbl.Rows
 
-            Dim ChildNode(0) As TreeNode
-            ChildNode(0) = New TreeNode(row.Item("Answer") & " - " & row.Item("GivenBy") & "(" & row.Item("Reviewed") & ")")
-            ChildNode(0).ImageIndex = 1
-            ChildNode(0).SelectedImageIndex = 1
+            Dim AnswerString As String = ""
+            Try
+                AnswerString = row.Item("Answer")
+            Catch ex As Exception
+            End Try
+
             Dim RootNode As TreeNode = Nothing
             Dim RootString As String = row.Item("Question") & "..."
             Dim CutPlace As Long = 50
+            Dim ChildString As String = row.Item("Answer") & " - " & row.Item("GivenBy") & "(" & row.Item("Reviewed") & ")"
+            Dim SpaceLocation As Long = 0
+            Dim i As Integer = 0
+
+            Dim ChildNode() As TreeNode
+
+            If AnswerString <> "" Then
+
+
+                Do While ChildString <> ""
+
+                    ReDim Preserve ChildNode(i)
+                    SpaceLocation = 0
+                    SpaceLocation = InStr(CutPlace, ChildString, " ", CompareMethod.Binary)
+                    If SpaceLocation <> 0 Then CutPlace = SpaceLocation
+
+                    Dim LeftString As String = Strings.Left(ChildString, CutPlace)
+
+                    ChildNode(i) = New TreeNode(Trim(LeftString))
+                    ChildString = Replace(ChildString, LeftString, "")
+                    ChildNode(i).ImageIndex = 3
+                    ChildNode(i).SelectedImageIndex = 3
+                    i += 1
+
+                Loop
+
+                ReDim Preserve ChildNode(i - 1)
+                ChildNode(0).ImageIndex = 1
+                ChildNode(0).SelectedImageIndex = 1
+            End If
+
+
+
 
             Do While RootString <> ""
 
-                Dim SpaceLocation As Long = 0
+                ReDim Preserve ChildNode(i - 1)
+                SpaceLocation = 0
                 SpaceLocation = InStr(CutPlace, RootString, " ", CompareMethod.Binary)
                 If SpaceLocation <> 0 Then CutPlace = SpaceLocation
 
                 Dim LeftString As String = Strings.Left(RootString, CutPlace)
 
-                If Len(RootString) > CutPlace Then
+                If Len(RootString) > CutPlace Or AnswerString = "" Then
                     RootNode = New TreeNode(Trim(LeftString))
                 Else
                     RootNode = New TreeNode(Trim(LeftString), ChildNode)
@@ -184,8 +215,9 @@ Public Class Form1
         Next
 
         QnAToggle = True
-        ToggleByLabel(Panel1, QnAToggle, "Questions and Answers", 260, 30)
-
+        ToggleByLabel(Panel1, Label1, QnAToggle, "Questions and Answers", 260, 30)
+        CodesToggle = True
+        ToggleByLabel(Panel2, Label3, CodesToggle, "Codes", 260, 30)
 
         If OverClass.ReadOnlyUser = False Then
             TextBox2.ReadOnly = False
@@ -197,11 +229,12 @@ Public Class Form1
     End Sub
 
     Private Sub Label1_DoubleClick(sender As Object, e As EventArgs) Handles Label1.DoubleClick
-        ToggleByLabel(Panel1, QnAToggle, "Questions and Answers", 260, 30)
+        ToggleByLabel(Panel1, Label1, QnAToggle, "Questions and Answers", 260, 30)
     End Sub
 
 
     Private Sub ToggleByLabel(WhichPanel As Panel,
+                              WhichLabel As Label,
                               ByRef ToggleBoolean As Boolean,
                               PanelLabel As String,
                               ExpandHeight As Long,
@@ -211,7 +244,7 @@ Public Class Form1
         If ToggleBoolean = False Then
 
             Dim HeightChange As Long = WhichPanel.Height
-            Label1.Text = "- " & PanelLabel & "..."
+            WhichLabel.Text = "- " & PanelLabel & "..."
             WhichPanel.Height = ExpandHeight
             HeightChange = WhichPanel.Height - HeightChange
             For Each ctl As Control In TabPage2.Controls
@@ -225,7 +258,7 @@ Public Class Form1
         ElseIf ToggleBoolean = True Then
 
             Dim HeightChange As Long = WhichPanel.Height
-            Label1.Text = "+ " & PanelLabel & "..."
+            WhichLabel.Text = "+ " & PanelLabel & "..."
             WhichPanel.Height = RetractHeight
             HeightChange = WhichPanel.Height - HeightChange
             For Each ctl As Control In TabPage2.Controls
@@ -242,4 +275,7 @@ Public Class Form1
 
     End Sub
 
+    Private Sub Label3_DoubleClick(sender As Object, e As EventArgs) Handles Label3.DoubleClick
+        ToggleByLabel(Panel2, Label3, CodesToggle, "Codes", 260, 30)
+    End Sub
 End Class

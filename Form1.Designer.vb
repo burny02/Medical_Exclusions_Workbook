@@ -25,29 +25,31 @@ Partial Class Form1
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
-        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TreeView1 = New System.Windows.Forms.TreeView()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        Me.Panel2.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage2.SuspendLayout()
-        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel1.SuspendLayout()
+        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -78,19 +80,6 @@ Partial Class Form1
         Me.TabPage1.Size = New System.Drawing.Size(686, 486)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Menu"
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.PictureBox1.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.PictureBox1.BackgroundImage = Global.Medical_Exclusions_Workbook.My.Resources.Resources.Magni
-        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox1.Location = New System.Drawing.Point(184, 344)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(45, 42)
-        Me.PictureBox1.TabIndex = 21
-        Me.PictureBox1.TabStop = False
         '
         'ListBox1
         '
@@ -129,23 +118,10 @@ Partial Class Form1
         Me.Label2.TabIndex = 15
         Me.Label2.Text = "Version"
         '
-        'PictureBox4
-        '
-        Me.PictureBox4.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.PictureBox4.BackgroundImage = Global.Medical_Exclusions_Workbook.My.Resources.Resources.hVIVO_screensaver_two
-        Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.PictureBox4.Location = New System.Drawing.Point(101, 30)
-        Me.PictureBox4.Name = "PictureBox4"
-        Me.PictureBox4.Size = New System.Drawing.Size(501, 420)
-        Me.PictureBox4.TabIndex = 16
-        Me.PictureBox4.TabStop = False
-        '
         'TabPage2
         '
-        Me.TabPage2.Controls.Add(Me.TextBox4)
-        Me.TabPage2.Controls.Add(Me.PictureBox5)
-        Me.TabPage2.Controls.Add(Me.PictureBox3)
+        Me.TabPage2.Controls.Add(Me.Panel2)
+        Me.TabPage2.Controls.Add(Me.PictureBox6)
         Me.TabPage2.Controls.Add(Me.Panel1)
         Me.TabPage2.Controls.Add(Me.TextBox3)
         Me.TabPage2.Controls.Add(Me.TextBox2)
@@ -158,47 +134,17 @@ Partial Class Form1
         Me.TabPage2.Text = "View"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
-        'PictureBox5
-        '
-        Me.PictureBox5.BackgroundImage = Global.Medical_Exclusions_Workbook.My.Resources.Resources.Male
-        Me.PictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox5.Location = New System.Drawing.Point(19, 131)
-        Me.PictureBox5.Name = "PictureBox5"
-        Me.PictureBox5.Size = New System.Drawing.Size(49, 47)
-        Me.PictureBox5.TabIndex = 6
-        Me.PictureBox5.TabStop = False
-        '
-        'PictureBox3
-        '
-        Me.PictureBox3.BackgroundImage = Global.Medical_Exclusions_Workbook.My.Resources.Resources.female
-        Me.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.PictureBox3.Location = New System.Drawing.Point(110, 131)
-        Me.PictureBox3.Name = "PictureBox3"
-        Me.PictureBox3.Size = New System.Drawing.Size(49, 47)
-        Me.PictureBox3.TabIndex = 5
-        Me.PictureBox3.TabStop = False
-        '
         'Panel1
         '
+        Me.Panel1.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel1.Controls.Add(Me.PictureBox2)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.TreeView1)
-        Me.Panel1.Location = New System.Drawing.Point(19, 325)
+        Me.Panel1.Location = New System.Drawing.Point(19, 284)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(523, 32)
+        Me.Panel1.Size = New System.Drawing.Size(659, 35)
         Me.Panel1.TabIndex = 4
-        '
-        'PictureBox2
-        '
-        Me.PictureBox2.BackgroundImage = Global.Medical_Exclusions_Workbook.My.Resources.Resources.phone
-        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox2.Location = New System.Drawing.Point(3, 0)
-        Me.PictureBox2.Name = "PictureBox2"
-        Me.PictureBox2.Size = New System.Drawing.Size(27, 30)
-        Me.PictureBox2.TabIndex = 5
-        Me.PictureBox2.TabStop = False
         '
         'Label1
         '
@@ -213,7 +159,7 @@ Partial Class Form1
         '
         'TreeView1
         '
-        Me.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TreeView1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TreeView1.Indent = 19
         Me.TreeView1.ItemHeight = 20
@@ -222,38 +168,105 @@ Partial Class Form1
         Me.TreeView1.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.TreeView1.ShowLines = False
         Me.TreeView1.ShowPlusMinus = False
-        Me.TreeView1.Size = New System.Drawing.Size(480, 189)
+        Me.TreeView1.Size = New System.Drawing.Size(659, 189)
         Me.TreeView1.TabIndex = 3
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(19, 200)
+        Me.TextBox3.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TextBox3.Location = New System.Drawing.Point(19, 123)
         Me.TextBox3.Margin = New System.Windows.Forms.Padding(2)
         Me.TextBox3.Multiline = True
         Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(480, 91)
+        Me.TextBox3.Size = New System.Drawing.Size(480, 127)
         Me.TextBox3.TabIndex = 1
         '
         'TextBox2
         '
+        Me.TextBox2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.TextBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBox2.Location = New System.Drawing.Point(19, 67)
         Me.TextBox2.Margin = New System.Windows.Forms.Padding(2)
         Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(425, 28)
+        Me.TextBox2.Size = New System.Drawing.Size(659, 28)
         Me.TextBox2.TabIndex = 0
         '
-        'TextBox4
+        'Panel2
         '
-        Me.TextBox4.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox4.Cursor = System.Windows.Forms.Cursors.Arrow
-        Me.TextBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox4.ForeColor = System.Drawing.SystemColors.MenuHighlight
-        Me.TextBox4.Location = New System.Drawing.Point(19, 100)
-        Me.TextBox4.Multiline = True
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(480, 20)
-        Me.TextBox4.TabIndex = 8
+        Me.Panel2.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel2.Controls.Add(Me.PictureBox3)
+        Me.Panel2.Controls.Add(Me.Label3)
+        Me.Panel2.Location = New System.Drawing.Point(19, 340)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(659, 34)
+        Me.Panel2.TabIndex = 10
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(34, 2)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(96, 24)
+        Me.Label3.TabIndex = 4
+        Me.Label3.Text = "+ Codes..."
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.PictureBox1.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.PictureBox1.BackgroundImage = Global.Medical_Exclusions_Workbook.My.Resources.Resources.Magni
+        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PictureBox1.Location = New System.Drawing.Point(184, 344)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(45, 42)
+        Me.PictureBox1.TabIndex = 21
+        Me.PictureBox1.TabStop = False
+        '
+        'PictureBox4
+        '
+        Me.PictureBox4.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.PictureBox4.BackgroundImage = Global.Medical_Exclusions_Workbook.My.Resources.Resources.hVIVO_screensaver_two
+        Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.PictureBox4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.PictureBox4.Location = New System.Drawing.Point(101, 30)
+        Me.PictureBox4.Name = "PictureBox4"
+        Me.PictureBox4.Size = New System.Drawing.Size(501, 420)
+        Me.PictureBox4.TabIndex = 16
+        Me.PictureBox4.TabStop = False
+        '
+        'PictureBox3
+        '
+        Me.PictureBox3.BackgroundImage = Global.Medical_Exclusions_Workbook.My.Resources.Resources.codes
+        Me.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox3.Location = New System.Drawing.Point(3, 0)
+        Me.PictureBox3.Name = "PictureBox3"
+        Me.PictureBox3.Size = New System.Drawing.Size(27, 30)
+        Me.PictureBox3.TabIndex = 5
+        Me.PictureBox3.TabStop = False
+        '
+        'PictureBox6
+        '
+        Me.PictureBox6.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.PictureBox6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PictureBox6.Location = New System.Drawing.Point(531, 123)
+        Me.PictureBox6.Name = "PictureBox6"
+        Me.PictureBox6.Size = New System.Drawing.Size(147, 127)
+        Me.PictureBox6.TabIndex = 9
+        Me.PictureBox6.TabStop = False
+        '
+        'PictureBox2
+        '
+        Me.PictureBox2.BackgroundImage = Global.Medical_Exclusions_Workbook.My.Resources.Resources.phone
+        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.PictureBox2.Location = New System.Drawing.Point(3, 0)
+        Me.PictureBox2.Name = "PictureBox2"
+        Me.PictureBox2.Size = New System.Drawing.Size(27, 30)
+        Me.PictureBox2.TabIndex = 5
+        Me.PictureBox2.TabStop = False
         '
         'Form1
         '
@@ -270,14 +283,16 @@ Partial Class Form1
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
-        CType(Me.PictureBox5, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox4, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox6, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -297,7 +312,8 @@ Partial Class Form1
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents PictureBox2 As PictureBox
-    Friend WithEvents PictureBox5 As PictureBox
+    Friend WithEvents PictureBox6 As PictureBox
+    Friend WithEvents Panel2 As Panel
     Friend WithEvents PictureBox3 As PictureBox
-    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents Label3 As Label
 End Class
