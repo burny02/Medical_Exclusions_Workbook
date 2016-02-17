@@ -2,7 +2,6 @@ C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\b
 C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\bin\Debug\Medical_Exclusions_Workbook.exe
 C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\bin\Debug\Medical_Exclusions_Workbook.pdb
 C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\bin\Debug\Medical_Exclusions_Workbook.xml
-C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\bin\Debug\TemplateDB.dll
 C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\bin\Debug\TemplateDB.pdb
 C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\bin\Debug\TemplateDB.xml
 C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\obj\Debug\Medical_Exclusions_Workbook.vbprojResolveAssemblyReference.cache
@@ -12,3 +11,8 @@ C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\o
 C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\obj\Debug\Medical_Exclusions_Workbook.exe
 C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\obj\Debug\Medical_Exclusions_Workbook.xml
 C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\obj\Debug\Medical_Exclusions_Workbook.pdb
+C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\bin\Debug\TemplateDB.dll
+C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\bin\Debug\Medical_Exclusions_Workbook.exe.manifest
+C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\bin\Debug\Medical_Exclusions_Workbook.application
+C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\obj\Debug\Medical_Exclusions_Workbook.exe.manifest
+C:\OK\Databases\Backup\Medical_Exclusions_Workbook\Medical_Exclusions_Workbook\obj\Debug\Medical_Exclusions_Workbook.application

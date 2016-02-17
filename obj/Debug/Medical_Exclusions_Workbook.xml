@@ -27,6 +27,11 @@ Medical_Exclusions_Workbook
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.Google">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.help">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
