@@ -26,7 +26,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <PublisherName>David Burnside</PublisherName>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -199,6 +199,48 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Google.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hVivo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Background2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Background4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Background3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Background5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Background6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Wiki.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NIH.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NIH1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\WebMD.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logo2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Banner.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -22,6 +22,41 @@ Medical_Exclusions_Workbook
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.Background">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.Background2">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.Background3">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.Background4">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.Background5">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.Background6">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.Banner">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.codes">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
@@ -33,6 +68,11 @@ Medical_Exclusions_Workbook
 </summary>
 </member>
 <member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.help">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.hVivo">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
@@ -52,7 +92,22 @@ Medical_Exclusions_Workbook
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.NIH">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.phone">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.WebMD">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:Medical_Exclusions_Workbook.My.Resources.Resources.Wiki">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>

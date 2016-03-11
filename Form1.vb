@@ -13,40 +13,71 @@ Public Class Form1
 
         Me.WindowState = FormWindowState.Maximized
 
+        Dim Blurb As String = "This system is intended as a reference tool for .. ... ." & vbNewLine &
+                "... ... ..." & vbNewLine &
+                "... ... ..."
+
         Call StartUp(Me)
 
         Try
-            Me.Label2.Text = SolutionName & vbNewLine & "Developed by David Burnside" & vbNewLine & "Version: " & System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString
+            Me.Label2.Text = SolutionName & vbNewLine & "Developed by David Burnside" & vbNewLine & "Version: " &
+                System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString &
+                vbNewLine & vbNewLine & Blurb
         Catch
-            Me.Label2.Text = SolutionName & vbNewLine & "Developed by David Burnside"
+            Me.Label2.Text = SolutionName & vbNewLine & "Developed by David Burnside" &
+                vbNewLine & vbNewLine & Blurb
+
         End Try
 
         Me.Text = SolutionName
+
+        ListBox1.Parent = Me
+        ListBox1.BringToFront()
 
         Dim clm1 As New DataColumn
         clm1.ColumnName = "CondName"
         Dt.Columns.Add(clm1)
 
+        DataGridView3.DataSource = OverClass.TempDataTable("SELECT TOP 12 format(DateTime,'dd-MMM-yyyy')" &
+                "& ':    ' & Table & '  -  ' & Action & ' (' & Condition & ')' As Show, ConditionID From History ORDER BY DateTime DESC")
+        DataGridView3.Columns("ConditionID").Visible = False
+
+        DataGridView2.DataSource = OverClass.TempDataTable("SELECT format(DateTime,'dd-MMM-yyyy') & ':    Document Added (' & DocName & ')' As Show, " &
+                "URL From Docs ORDER BY DateTime DESC")
+        DataGridView2.Columns("URL").Visible = False
+
+
     End Sub
-
-
 
     Private Sub RefreshList()
 
-        Dim StringLength As Integer = 20
+        Dim StringLength As Integer = 22
         Dim TempOverclass As TemplateDB.OverClass = NewOverclass()
         Dim SearchString As String = TextBox1.Text.ToString
         Dim TempDT As DataTable
 
+        Dim UnionQry As String = "(SELECT ConditionID, CondName FROM ConditionTbl " &
+                                 "UNION ALL Select ConditionID, Alt_Name FROM Synonyms)"
+
+        Dim ExactMatchQry As String = "(SELECT TOP 10 iif(len(CondName)>" & StringLength &
+        ", Left(CondName," & StringLength & ")& '...',CondName) AS Cond, ConditionID, 'A' As WhichOrder " &
+        "FROM " & UnionQry & " WHERE CondName LIKE '" & SearchString & "%')"
+
+        Dim WithinMatchQry As String = "(SELECT TOP 10 iif(len(CondName)>" & StringLength &
+        ", Left(CondName," & StringLength & ") & '...',CondName)  AS Cond, ConditionID, 'B' As WhichOrder " &
+        "FROM " & UnionQry & " WHERE CondName LIKE '%" & SearchString & "%')"
+
+        Dim DescMatchQry As String = "(SELECT TOP 10 iif(len(CondName)>" & StringLength &
+        ", Left(CondName," & StringLength & ") & '...',CondName)  AS Cond, ConditionID, 'C' As WhichOrder " &
+        "FROM ConditionTbl WHERE WhatIsIt LIKE '%" & SearchString & "%')"
+
+        Dim CombineQry As String = "(SELECT * FROM " & ExactMatchQry & " UNION ALL " & WithinMatchQry & " UNION ALL " & DescMatchQry & ")"
+
+        Dim FullSQL = "SELECT TOP 10 Cond, ConditionID FROM " & CombineQry & "GROUP BY Cond, ConditionID ORDER BY first(WhichOrder) ASC, Cond ASC"
+
         If TextBox1.Text.ToString <> "" Then
 
-            TempDT = TempOverclass.TempDataTable("SELECT TOP 4 Cond, ConditionID FROM " &
-            "(SELECT Cond, WhichOrder, ConditionID FROM (SELECT TOP 4 iif(len(CondName)>" &
-            StringLength & ", '...' & Left(CondName," & StringLength & "),CondName) AS Cond, CondName, ConditionID, 'A' AS WhichOrder " &
-            "FROM ConditionTbl WHERE CondName LIKE '" & SearchString & "%'" &
-            "UNION SELECT TOP 4 iif(len(CondName)>" &
-            StringLength & ",'...' & Left(CondName," & StringLength & "),CondName) AS Cond, CondName, ConditionID, 'B' AS WhichOrder " &
-            "FROM ConditionTbl WHERE CondName LIKE '%" & SearchString & "%') ORDER BY WhichOrder ASC)")
+            TempDT = TempOverclass.TempDataTable(FullSQL)
 
             If Thread.CurrentThread.ManagedThreadId = LatestThread And TextBox1.Text.ToString <> "" Then
                 Dt = TempDT
@@ -64,15 +95,30 @@ Public Class Form1
     End Sub
 
     Private Sub RefreshListBox()
-        ListBox1.DataSource = Dt
-        ListBox1.ValueMember = "ConditionID"
+
+        ListBox1.Visible = False
         ListBox1.DisplayMember = "Cond"
+        ListBox1.ValueMember = "ConditionID"
+        ListBox1.DataSource = Dt
         If Dt.Rows.Count > 0 Then ListBox1.Visible = True
+
     End Sub
 
     Private Sub TabControl1_Selecting(sender As Object, e As TabControlCancelEventArgs) Handles TabControl1.Selecting
 
+        OverClass.ResetCollection()
+
         Select Case e.TabPage.Text
+
+            Case "Menu"
+
+                DataGridView3.DataSource = OverClass.TempDataTable("Select TOP 12 format(DateTime,'dd-MMM-yyyy')" &
+                "& ':    ' & Table & '  -  ' & Action & ' (' & Condition & ')' As Show, ConditionID From History ORDER BY DateTime DESC")
+                DataGridView3.Columns("ConditionID").Visible = False
+
+                DataGridView2.DataSource = OverClass.TempDataTable("SELECT format(DateTime,'dd-MMM-yyyy') & ':    Document Added (' & DocName & ')' As Show, " &
+                "URL From Docs ORDER BY DateTime DESC")
+                DataGridView2.Columns("URL").Visible = False
 
             Case "Conditions"
                 RefreshPage()
@@ -83,30 +129,34 @@ Public Class Form1
 
     Private Sub RefreshPage()
 
-        TextBox2.ReadOnly = True
-        TextBox3.ReadOnly = True
+        TextBox2.Enabled = False
+        TextBox3.Enabled = False
+        TextBox4.Enabled = False
 
-        Dim SQLString As String = "SELECT ImageFileName, WhatIsIt, CondName FROM ConditionTbl WHERE ConditionID=" & CondID
-        Dim SQLString2 As String = "SELECT Question, Answer, GivenBy, Reviewed FROM QnA " &
-                                    "WHERE ConditionID=" & CondID & " And QType='18-45'"
-        Dim SQLString3 As String = "SELECT Question, Answer, GivenBy, Reviewed FROM QnA " &
-                                    "WHERE ConditionID=" & CondID & " And QType='46-64'"
-        Dim SQLString4 As String = "SELECT Question, Answer, GivenBy, Reviewed FROM QnA " &
-                                    "WHERE ConditionID=" & CondID & " And QType='Asthma'"
+        Dim SQLArray(3) As String
 
-        Dim InfoTbl As DataTable = OverClass.TempDataTable(SQLString)
+        SQLArray(0) = "SELECT ImageFileName, WhatIsIt, CondName FROM ConditionTbl WHERE ConditionID=" & CondID
+        SQLArray(1) = "Select Question, Answer, GivenBy, Reviewed FROM QnA " &
+                      "WHERE ConditionID=" & CondID & " And QType1=True"
+        SQLArray(2) = "Select Question, Answer, GivenBy, Reviewed FROM QnA " &
+                      "WHERE ConditionID=" & CondID & " And QType2=True"
+        SQLArray(3) = "Select Question, Answer, GivenBy, Reviewed FROM QnA " &
+                      "WHERE ConditionID=" & CondID & " And QType3=True"
+
+        Dim Alt_NameString As String = "Select Alt_Name FROM Synonyms WHERE ConditionID=" & CondID & " ORDER By Alt_Name"
+
+        Dim TblArray() As DataTable = OverClass.MultiTempDataTable(SQLArray)
+        Dim InfoTbl As DataTable = TblArray(0)
         TreeView1.Nodes.Clear()
         TreeView2.Nodes.Clear()
         TreeView3.Nodes.Clear()
         If InfoTbl.Rows.Count <= 0 Then Exit Sub
 
-        Dim QnATbl As DataTable = OverClass.TempDataTable(SQLString2)
-        Dim QnATbl2 As DataTable = OverClass.TempDataTable(SQLString3)
-        Dim QnATbl3 As DataTable = OverClass.TempDataTable(SQLString4)
-        If QnATbl.Rows.Count >= 1 Then SetQnA(QnATbl, TreeView1)
-        If QnATbl2.Rows.Count >= 1 Then SetQnA(QnATbl2, TreeView2)
-        If QnATbl3.Rows.Count >= 1 Then SetQnA(QnATbl3, TreeView3)
+        If TblArray(1).Rows.Count >= 1 Then SetQnA(TblArray(1), TreeView1)
+        If TblArray(2).Rows.Count >= 1 Then SetQnA(TblArray(2), TreeView2)
+        If TblArray(3).Rows.Count >= 1 Then SetQnA(TblArray(3), TreeView3)
 
+        TextBox4.Text = Replace(OverClass.CreateCSVString(Alt_NameString), ", ", ", ")
         TextBox2.Text = InfoTbl.Rows(0).Item("CondName")
         Dim ImageFileName As String = ImagePath & InfoTbl.Rows(0).Item("ImageFileName")
 
@@ -125,8 +175,9 @@ Public Class Form1
         ToggleByLabel(Panel2, Label3, CodesToggle)
 
         If OverClass.ReadOnlyUser = False Then
-            TextBox2.ReadOnly = False
-            TextBox3.ReadOnly = False
+            TextBox2.Enabled = False
+            TextBox3.Enabled = False
+            TextBox4.Enabled = False
         End If
 
 
@@ -170,22 +221,12 @@ Public Class Form1
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
         ListBox1.Visible = False
-
         If TextBox1.Text.ToString <> "" Then
             Dim trd = New Thread(AddressOf RefreshList)
             LatestThread = trd.ManagedThreadId
             trd.Start()
         End If
     End Sub
-
-    Private Sub ListBox1_DoubleClick(sender As Object, e As EventArgs) Handles ListBox1.DoubleClick
-        CondID = ListBox1.SelectedValue.ToString
-        Call RefreshPage()
-        TextBox1.Text = ""
-        ListBox1.Visible = False
-    End Sub
-
-
 
     Private Sub ResizePanel(WhichPanel As Panel)
 
@@ -378,8 +419,9 @@ Public Class Form1
 
     End Sub
 
-    Private Sub Label4_DoubleClick(sender As Object, e As EventArgs) Handles Label4.DoubleClick
-        ToggleByLabel(Panel3, Label4, GoogleToggle)
+    Private Sub Label4_DoubleClick(sender As Object, e As EventArgs) Handles Label4.DoubleClick, PictureBox5.DoubleClick
+        Dim URL As String = "www.Google.com/search?q=" & Replace(TextBox2.Text.ToString, " ", "+")
+        Process.Start(URL)
     End Sub
 
     Private Sub TreeView1_AfterExpand(sender As Object, e As TreeViewEventArgs) Handles TreeView1.AfterExpand
@@ -408,5 +450,62 @@ Public Class Form1
 
     Private Sub TreeView3_AfterExpand(sender As Object, e As TreeViewEventArgs) Handles TreeView3.AfterExpand
         ResizePanel(Panel1)
+    End Sub
+
+    Private Sub SetUpAZIndex(WhichLabel As Label)
+        OverClass.CreateDataSet("Select ConditionID, CondName FROM ConditionTbl WHERE CondName Like '" & WhichLabel.Text & "%'", BindingSource1, DataGridView1)
+        DataGridView1.Columns("ConditionID").Visible = False
+    End Sub
+
+    Private Sub Label24_DoubleClick_1(sender As Object, e As EventArgs) Handles Label9.DoubleClick, Label8.DoubleClick, Label7.DoubleClick, Label6.DoubleClick, Label33.DoubleClick, Label32.DoubleClick, Label31.DoubleClick, Label30.DoubleClick, Label29.DoubleClick, Label28.DoubleClick, Label27.DoubleClick, Label26.DoubleClick, Label25.DoubleClick, Label24.DoubleClick, Label21.DoubleClick, Label20.DoubleClick, Label19.DoubleClick, Label18.DoubleClick, Label17.DoubleClick, Label16.DoubleClick, Label15.DoubleClick, Label14.DoubleClick, Label13.DoubleClick, Label12.DoubleClick, Label11.DoubleClick, Label10.DoubleClick
+        SetUpAZIndex(sender)
+    End Sub
+
+    Private Sub DataGridView1_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellContentDoubleClick
+        CondID = sender.item("ConditionID", e.RowIndex).value
+        TabControl1.SelectedIndex = 2
+        TabControl1_Selecting(TabControl1, New TabControlCancelEventArgs(TabPage2, 0, False, TabControlAction.Selecting))
+        Call RefreshPage()
+    End Sub
+
+    Private Sub DataGridView2_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView2.CellContentDoubleClick
+        System.Diagnostics.Process.Start(sender.item("URL", e.RowIndex).value)
+    End Sub
+
+    Private Sub Label22_DoubleClick(sender As Object, e As EventArgs) Handles Label22.DoubleClick, PictureBox8.DoubleClick
+        Dim URL = "https://en.wikipedia.org/w/index.php?search=" & Replace(TextBox2.Text.ToString, " ", "+")
+        Process.Start(URL)
+    End Sub
+
+    Private Sub Label34_DoubleClick(sender As Object, e As EventArgs) Handles Label34.DoubleClick, PictureBox9.DoubleClick
+        Dim URL = "https://vsearch.nlm.nih.gov/vivisimo/cgi-bin/query-meta?query=" & Replace(TextBox2.Text.ToString, " ", "+") & "&v%3Aproject=nlm-main-website"
+        Process.Start(URL)
+    End Sub
+    Private Sub Label35_DoubleClick(sender As Object, e As EventArgs) Handles Label35.DoubleClick, PictureBox10.DoubleClick
+        Dim URL = "http://www.webmd.com/search/search_results/default.aspx?query=" & Replace(TextBox2.Text.ToString, " ", "+")
+        Process.Start(URL)
+    End Sub
+
+    Private Sub DataGridView3_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView3.CellContentDoubleClick
+        CondID = sender.item("ConditionID", e.RowIndex).value
+        TabControl1.SelectedIndex = 2
+        TabControl1_Selecting(TabControl1, New TabControlCancelEventArgs(TabPage2, 0, False, TabControlAction.Selecting))
+        Call RefreshPage()
+    End Sub
+
+    Private Sub ListBox1_DoubleClick(sender As Object, e As EventArgs) Handles ListBox1.DoubleClick
+        CondID = ListBox1.SelectedValue
+        TabControl1.SelectedIndex = 2
+        TabControl1_Selecting(TabControl1, New TabControlCancelEventArgs(TabPage2, 0, False, TabControlAction.Selecting))
+        Call RefreshPage()
+        TextBox1.Text = ""
+        ListBox1.Visible = False
+    End Sub
+
+    Private Sub ListBox1_Leave(sender As Object, e As EventArgs) Handles ListBox1.Leave, TextBox1.Leave
+        If ListBox1 Is Me.ActiveControl Then Exit Sub
+        If TextBox1 Is Me.ActiveControl Then Exit Sub
+        If PictureBox1 Is Me.ActiveControl Then Exit Sub
+        ListBox1.Visible = False
     End Sub
 End Class
